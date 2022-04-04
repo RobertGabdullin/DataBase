@@ -1,4 +1,4 @@
-DROP table IF EXISTS customer, order_, item_, order_item;
+DROP table IF EXISTS customer, order_, item_, order_item, temp_;
 
 CREATE table customer(
 	customerId INT PRIMARY KEY,
@@ -45,3 +45,22 @@ INSERT INTO order_item(orderId_, itemId_, quant)
 VALUES
 (2301, 3786, 3), (2301, 4011, 6), (2301, 9132, 8),
 (2302, 5794, 4), (2303, 4011, 2), (2303, 3141, 2);
+
+/* Uncomment necessary query */
+
+/* select orderId, sum(quant) as TotalNumber, sum(quant * price) as AmountToPay
+from order_ join order_item on orderId = orderId_
+			join item_ on itemId = itemId_
+group by orderId; */
+
+/*-----------------------------------------------------------------*/
+
+/*create table temp_ as
+	select orderId, sum(quant * price) as AmountToPay, customerId_
+	from order_ join order_item on orderId = orderId_
+				join item_ on itemId = itemId_
+	group by orderId;
+	
+select customerName, AmountToPay
+from temp_ join Customer on customerId = customerId_
+where AmountToPay = (select max(AmountToPay) from temp_)*/
