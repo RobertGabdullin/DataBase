@@ -1,0 +1,10 @@
+Read commited.
+1) Terminals show different information because in "read commited" isolation level transactions can see only commited updates (and uncommited inside this transaction).
+2) After commit in second session terminals, both terminals show the same information.
+3) When the second session (second terminal) tries to update the table, it waits for the first session to complete its transaction (commit or rollback). After committing, the second session continues the transaction. After the rollback, the second terminal can see the changes made in the first terminal due to the commit and cannot see its own changes due to the rollback in its transaction. First terminal see same information.
+
+Repeatable read.
+
+1) Terminals show different information because in "repeatable read" isolation level transactions can see only commited updates (and uncommited inside this transaction) (and if this information has not been read before).
+2) After commit in second session terminals, first terminal shows the same information as before (do not see update in second session) because this information has been read before.
+3) ERROR: could not serialize access due to concurrent update. Repeatable read transaction will be rolled back with the message because a repeatable read transaction cannot modify or lock rows changed by other transactions after the repeatable read transaction began.
